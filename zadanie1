@@ -3,27 +3,21 @@ import urllib.request
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Lemon.jpg/512px-Lemon.jpg'
-
 
 resp = urllib.request.urlopen(url)
 image = np.asarray(bytearray(resp.read()), dtype="uint8")
 img = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
-# 2. Przetwarzanie (zmniejszenie o 50%)
 scale_percent = 50 
 width = int(img.shape[1] * scale_percent / 100)
 height = int(img.shape[0] * scale_percent / 100)
 dim = (width, height)
 img_resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
 
-
 img_gray = cv2.cvtColor(img_resized, cv2.COLOR_BGR2GRAY)
 
-
 img_rotated = cv2.rotate(img_gray, cv2.ROTATE_90_CLOCKWISE)
-
 
 plt.figure(figsize=(10, 5))
 
@@ -32,14 +26,12 @@ plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 plt.title("Oryginał")
 plt.axis("off")
 
-
 plt.subplot(1, 2, 2)
 plt.imshow(img_rotated, cmap='gray')
 plt.title("Wynik (szary, 50%, obrót 90°)")
 plt.axis("off")
 
 plt.show()
-
 
 print("Macierz wynikowa (fragment 5x5):")
 print(img_rotated[:5, :5]) 
